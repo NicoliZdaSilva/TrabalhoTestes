@@ -8,6 +8,7 @@ public abstract class static Pessoa(){
     public Pessoa(String nome, String idade, String cpf){
         this.nome = nome;
         this.idade = idade;
+        this.cpf = cpf;
     }
 
 }
