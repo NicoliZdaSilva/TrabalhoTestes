@@ -31,7 +31,7 @@ private final EntityManagerFactory emf;
         Veterinario vet = null;
 
         try {
-            vet = em.createQuery("SELECT v FROM Veterinario v WHERE v.cpf = :cpf", Veterinario.class)
+            vet = em.createQuery("SELECT v FROM veterinarios v WHERE v.cpf = :cpf", Veterinario.class)
                     .setParameter("cpf", cpf)
                     .getSingleResult();
 
@@ -76,7 +76,7 @@ private final EntityManagerFactory emf;
     public Veterinario readByCPF(String cpf) {
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("SELECT v FROM Veterinario v WHERE v.cpf = :cpf", Veterinario.class)
+            return em.createQuery("SELECT v FROM veterinarios v WHERE v.cpf = :cpf", Veterinario.class)
                     .setParameter("cpf", cpf)
                     .getSingleResult();
         } catch (NoResultException e) {
@@ -90,7 +90,7 @@ private final EntityManagerFactory emf;
     public List<Veterinario> findAll() {
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("SELECT v FROM Veterinario v", Veterinario.class)
+            return em.createQuery("SELECT v FROM veterinarios v", Veterinario.class)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
