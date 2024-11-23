@@ -3,7 +3,7 @@ public class VeterinarioDAO {
 private final EntityManagerFactory emf;
 
     public VeterinarioDAO() {
-        emf = Persistence.createEntityManagerFactory("Pads");
+        emf = Persistence.createEntityManagerFactory("testes");
     }
 
     public void save(Veterinario vet) {
