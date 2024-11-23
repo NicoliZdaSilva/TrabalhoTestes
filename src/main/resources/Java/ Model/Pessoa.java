@@ -1,8 +1,17 @@
 package Model;
 
+import jakarta.persistence.*;
+
+@MappedSuperclass
 public abstract class Pessoa {
+    @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false)
     private String idade;
+
+    @Id
+    @Column(nullable = false, unique = true)
     private String cpf;
 
     public Pessoa(String nome, String idade, String cpf) {
