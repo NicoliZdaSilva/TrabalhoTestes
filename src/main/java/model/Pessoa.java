@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import jakarta.persistence.*;
 
@@ -14,7 +14,7 @@ public abstract class Pessoa {
     @Column(nullable = false, unique = true)
     private String cpf;
 
-    public Pessoa(String nome, String idade, String cpf) {
+    public Pessoa() {
         if (nome == null || nome.isEmpty() ||
                 idade == null || idade.isEmpty() ||
                 cpf == null || cpf.isEmpty()) {

@@ -1,3 +1,14 @@
+package dao;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.Persistence;
+import model.Veterinario;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class VeterinarioDAO {
 
 private final EntityManagerFactory emf;
@@ -103,3 +114,5 @@ private final EntityManagerFactory emf;
     public void closeFactory() {
         emf.close();
     }
+
+}

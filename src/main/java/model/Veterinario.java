@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -21,10 +21,11 @@ public class Veterinario extends Pessoa {
     private LocalDate dataAdmissao;
 
     public Veterinario() {
+        super();
     }
 
     public Veterinario(String nome, String idade, String cpf, LocalDate dataAdmissao) {
-        super(nome, idade, cpf);
+        super();
         if (dataAdmissao == null) {
             throw new IllegalArgumentException("A data de admissão deve ser informada.");
         }

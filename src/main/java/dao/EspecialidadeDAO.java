@@ -1,6 +1,8 @@
-package Model;
+package dao;
 
 import jakarta.persistence.*;
+import model.Especialidade;
+
 import java.util.List;
 
 public class EspecialidadeDAO {
