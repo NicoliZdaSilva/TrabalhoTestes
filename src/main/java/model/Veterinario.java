@@ -2,6 +2,8 @@ package model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,12 +26,14 @@ public class Veterinario extends Pessoa {
     super();
     }
 
-    public Veterinario(String nome, int idade, String cpf, LocalDate dataAdmissao) {
+    public Veterinario(String nome, int idade, String cpf, String dataAdmissao) {
         super(nome, idade, cpf);
-        if (dataAdmissao == null) {
-            throw new IllegalArgumentException("A data de admissão deve ser informada.");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            this.dataAdmissao = LocalDate.parse(dataAdmissao, formatter);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Formato de data inválido.");
         }
-        this.dataAdmissao = dataAdmissao;
     }
 
     public Set<Especialidade> getEspecialidades() {
