@@ -21,11 +21,11 @@ public class Veterinario extends Pessoa {
     private LocalDate dataAdmissao;
 
     public Veterinario() {
-        super();
+    super();
     }
 
-    public Veterinario(String nome, String idade, String cpf, LocalDate dataAdmissao) {
-        super();
+    public Veterinario(String nome, int idade, String cpf, LocalDate dataAdmissao) {
+        super(nome, idade, cpf);
         if (dataAdmissao == null) {
             throw new IllegalArgumentException("A data de admissão deve ser informada.");
         }
@@ -68,5 +68,12 @@ public class Veterinario extends Pessoa {
         }
 
         this.dataAdmissao = dataAdmissao;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\nData de admissão: " + this.dataAdmissao +
+                "\nEspecialidades: " + this.especialidades;
     }
 }
