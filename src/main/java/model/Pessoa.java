@@ -16,7 +16,7 @@ public abstract class Pessoa {
 
     public Pessoa(String nome, int idade, String cpf) {
         if (nome == null || nome.isEmpty()) {
-            throw new IllegalArgumentException("O nome não pode ser nulo ou vazio.");
+            throw new IllegalArgumentException("É necessário informar o nome.");
         }
         if (idade <= 0 || idade >= 120) {
             throw new IllegalArgumentException("A idade deve ser maior que 0 e menor que 120.");
@@ -39,7 +39,7 @@ public abstract class Pessoa {
 
     public void setNome(String nome) {
         if (nome == null || nome.isEmpty()) {
-            throw new IllegalArgumentException("O nome não pode ser vazio.");
+            throw new IllegalArgumentException("É necessário informar o nome.");
         }
         this.nome = nome;
     }

@@ -46,4 +46,9 @@ public class Especialidade {
     public Set<Veterinario> getVeterinarios() {
         return veterinarios;
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }
