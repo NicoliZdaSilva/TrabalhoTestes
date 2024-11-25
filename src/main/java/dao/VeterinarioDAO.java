@@ -1,13 +1,14 @@
 package dao;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.*;
+import model.Especialidade;
 import model.Veterinario;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class VeterinarioDAO {
 
@@ -15,34 +16,43 @@ private final EntityManagerFactory emf;
 
     public VeterinarioDAO() {
         emf = Persistence.createEntityManagerFactory("testes");
+        EntityManager em = emf.createEntityManager();
+
     }
 
-    public void save(Veterinario vet) {
+    public void save(Veterinario veterinario) {
         EntityManager em = emf.createEntityManager();
         try {
+            EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(em);
+
+            List<Especialidade> especialidadesGerenciadas = veterinario.getEspecialidades()
+                    .stream()
+                    .map(especialidadeDAO::save)
+                    .collect(Collectors.toList());
+
+            veterinario.setEspecialidades(new HashSet<>(especialidadesGerenciadas), especialidadeDAO);
+
             em.getTransaction().begin();
-            if (em.contains(vet) || readByCPF(vet.getCpf()) != null) {
-                throw new IllegalArgumentException("Veterinário com este CPF já existe.");
-            }
-            em.persist(vet);
+            em.persist(veterinario);
             em.getTransaction().commit();
-        } catch (IllegalArgumentException e) {
-            em.getTransaction().rollback();
-            System.out.println(e.getMessage());
         } catch (Exception e) {
-            em.getTransaction().rollback();
-            e.printStackTrace();
-        } finally {
-            em.close();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Erro ao salvar o veterinário: " + e.getMessage(), e);
         }
     }
+
+
+
+
 
     public Veterinario remove(String cpf) {
         EntityManager em = emf.createEntityManager();
         Veterinario vet = null;
 
         try {
-            vet = em.createQuery("SELECT v FROM veterinarios v WHERE v.cpf = :cpf", Veterinario.class)
+            vet = em.createQuery("SELECT v FROM Veterinario v WHERE v.cpf = :cpf", Veterinario.class)
                     .setParameter("cpf", cpf)
                     .getSingleResult();
 
@@ -87,7 +97,7 @@ private final EntityManagerFactory emf;
     public Veterinario readByCPF(String cpf) {
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("SELECT v FROM veterinarios v WHERE v.cpf = :cpf", Veterinario.class)
+            return em.createQuery("SELECT v FROM Veterinario v WHERE v.cpf = :cpf", Veterinario.class)
                     .setParameter("cpf", cpf)
                     .getSingleResult();
         } catch (NoResultException e) {
@@ -101,11 +111,37 @@ private final EntityManagerFactory emf;
     public List<Veterinario> findAll() {
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("SELECT v FROM veterinarios v", Veterinario.class)
+            return em.createQuery("SELECT v FROM Veterinario v", Veterinario.class)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
+        } finally {
+            em.close();
+        }
+    }
+
+    public void saveEspecialidade(Especialidade especialidade) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+
+            TypedQuery<Especialidade> query = em.createQuery(
+                    "SELECT e FROM Especialidade e WHERE e.nome = :nome", Especialidade.class
+            );
+            query.setParameter("nome", especialidade.getNome());
+            List<Especialidade> result = query.getResultList();
+
+            if (result.isEmpty()) {
+                em.persist(especialidade);
+            } else {
+                especialidade.setId(result.get(0).getId());
+            }
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new RuntimeException("Erro ao salvar especialidade: " + e.getMessage(), e);
         } finally {
             em.close();
         }

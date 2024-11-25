@@ -30,7 +30,7 @@ public abstract class Pessoa {
     }
 
     public Pessoa() {
-        //padrao JPA
+
     }
 
     public String getNome() {

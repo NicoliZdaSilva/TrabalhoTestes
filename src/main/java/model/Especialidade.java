@@ -1,7 +1,9 @@
 package model;
 
+import dao.EspecialidadeDAO;
 import jakarta.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -51,4 +53,22 @@ public class Especialidade {
     public String toString() {
         return nome;
     }
+
+    public void setId(Long id) {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Especialidade that = (Especialidade) o;
+        return nome != null && nome.equals(that.nome);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome);
+    }
+
+
 }
