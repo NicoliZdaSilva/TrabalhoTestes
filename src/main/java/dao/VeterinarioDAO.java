@@ -23,28 +23,28 @@ private final EntityManagerFactory emf;
     public void save(Veterinario veterinario) {
         EntityManager em = emf.createEntityManager();
         try {
+            em.getTransaction().begin();
+
             EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(em);
 
-            List<Especialidade> especialidadesGerenciadas = veterinario.getEspecialidades()
+            Set<Especialidade> especialidadesGerenciadas = veterinario.getEspecialidades()
                     .stream()
-                    .map(especialidadeDAO::save)
-                    .collect(Collectors.toList());
+                    .map(especialidade -> especialidadeDAO.save(especialidade))
+                    .collect(Collectors.toSet());
 
-            veterinario.setEspecialidades(new HashSet<>(especialidadesGerenciadas), especialidadeDAO);
+            veterinario.setEspecialidades(especialidadesGerenciadas, especialidadeDAO);
+            em.merge(veterinario);
 
-            em.getTransaction().begin();
-            em.persist(veterinario);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
             throw new RuntimeException("Erro ao salvar o veterinário: " + e.getMessage(), e);
+        } finally {
+            em.close();
         }
     }
-
-
-
 
 
     public Veterinario remove(String cpf) {

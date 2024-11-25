@@ -18,18 +18,34 @@ public class EspecialidadeDAO {
     }
 
     public Especialidade save(Especialidade especialidade) {
-        TypedQuery<Especialidade> query = em.createQuery(
-                "SELECT e FROM Especialidade e WHERE e.nome = :nome", Especialidade.class);
-        query.setParameter("nome", especialidade.getNome());
-        List<Especialidade> result = query.getResultList();
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Especialidade> query = em.createQuery(
+                    "SELECT e FROM Especialidade e WHERE e.nome = :nome", Especialidade.class
+            );
+            query.setParameter("nome", especialidade.getNome());
+            List<Especialidade> result = query.getResultList();
 
-        if (result.isEmpty()) {
+            if (!result.isEmpty()) {
+                return em.merge(result.get(0));
+            }
+
+            em.getTransaction().begin();
             em.persist(especialidade);
+            em.getTransaction().commit();
+
             return especialidade;
-        } else {
-            return em.find(Especialidade.class, result.get(0).getId());
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Erro ao salvar especialidade: " + e.getMessage(), e);
+        } finally {
+            em.close();
         }
     }
+
+
 
 
 

@@ -17,12 +17,13 @@
             <property name="jakarta.persistence.jdbc.password" value="aluno"/>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
-            <property name="hibernate.show_sql" value="false"/>
-            <property name="hibernate.format_sql" value="false"/>
             <property name="hibernate.use_sql_comments" value="true"/>
-            <property name="hibernate.jdbc.log.warnings" value="false" />
             <property name="hibernate.generate_statistics" value="false" />
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
+
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="false"/>
+            <property name="hibernate.jdbc.log.warnings" value="false"/>
 
         </properties>
     </persistence-unit>
