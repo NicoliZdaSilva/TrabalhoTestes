@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CadastroVetUnitarioTest {
 
     @Test
-    public void TestCadastroCompleto(){
+    public void testCompleto(){
     //CT28
         String nome = "Maria Fernanda da Silva";
         int idade = 24;
@@ -34,7 +34,31 @@ public class CadastroVetUnitarioTest {
         assertTrue(vet1.getEspecialidades().contains(esp));
 
         System.out.println(vet1.toString());
-
-
     }
+
+    @Test
+    public void testFaltaDados(){
+        //CT29
+    }
+
+    @Test
+    public void testDataInvalida(){
+        //CT30
+    }
+
+    @Test
+    public void testMaisDeUmaEspecialidade(){
+        //CT31
+    }
+
+    @Test
+    public void testSemEspecialidade(){
+        //CT32
+    }
+
+    @Test
+    public void testEspecialidadeDuplicada(){
+        //CT33
+    }
+
 }

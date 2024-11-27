@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AtualizacaoVetUnitarioTest{
 
     @Test
-    public void TestAtualizacaoVet(){
+    public void testCorreto(){
       //CT34
         String nome = "Thaiane Bento de Almeida";
         int idade = 24;
@@ -59,8 +59,16 @@ public class AtualizacaoVetUnitarioTest{
 
         System.out.println("\nAtualização de veterinário: \n"+vet1.toString());
 
+    }
 
+    @Test
+    public void testRemoveEspecialidade(){
+        //CT35
+    }
 
+    @Test
+    public void testAlteraTodosOsDados(){
+        //CT36
 
     }
 

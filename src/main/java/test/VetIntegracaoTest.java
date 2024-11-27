@@ -5,12 +5,12 @@ import model.Especialidade;
 import model.Veterinario;
 import org.junit.jupiter.api.Test;
 import java.time.format.DateTimeFormatter;
-import static org.testng.AssertJUnit.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class CadastroVetIntegracaoTest {
+public class VetIntegracaoTest {
 
     @Test
-    public void testIntegracaoCadastroVet(){
+    public void testCompleto(){
      //CT52
         Especialidade esp = new Especialidade("Animais de Grande Porte");
 
@@ -31,5 +31,26 @@ public class CadastroVetIntegracaoTest {
         assertTrue(vetFromDb.getEspecialidades().contains(esp));
 
         System.out.println(vetFromDb.toString());
+    }
+
+    @Test
+    public void testFaltaDados(){
+        //CT53
+
+    }
+
+    @Test
+    public void testDataInvalida(){
+        //CT54
+    }
+
+    @Test
+    public void testVetDuplicado(){
+        //CT55
+    }
+
+    @Test
+    public void testRelacaoVetEspecialidade(){
+        //CT56
     }
 }
