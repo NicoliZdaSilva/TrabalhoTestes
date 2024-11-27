@@ -3,7 +3,7 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-
+<!--banco hibernate postgres -->
     <persistence-unit name="testes" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
@@ -25,6 +25,23 @@
             <property name="hibernate.format_sql" value="false"/>
             <property name="hibernate.jdbc.log.warnings" value="false"/>
 
+        </properties>
+    </persistence-unit>
+
+    <!-- Banco em memória, H2 para testes -->
+    <persistence-unit name="h2" transaction-type="RESOURCE_LOCAL">
+        <class>model.Veterinario</class>
+        <class>model.Especialidade</class>
+
+        <properties>
+            <property name="hibernate.connection.driver_class" value="org.h2.Driver" />
+            <property name="hibernate.connection.url" value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1" />
+            <property name="hibernate.connection.username" value="sa" />
+            <property name="hibernate.connection.password" value="" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>
