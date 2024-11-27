@@ -25,11 +25,11 @@ private final EntityManagerFactory emf;
         try {
             em.getTransaction().begin();
 
-            EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(em);
+            EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
 
             Set<Especialidade> especialidadesGerenciadas = veterinario.getEspecialidades()
                     .stream()
-                    .map(especialidade -> especialidadeDAO.save(especialidade))
+                    .map(especialidadeDAO::save)
                     .collect(Collectors.toSet());
 
             veterinario.setEspecialidades(especialidadesGerenciadas, especialidadeDAO);

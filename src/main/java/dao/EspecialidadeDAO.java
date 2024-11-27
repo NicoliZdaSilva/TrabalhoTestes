@@ -12,10 +12,11 @@ public class EspecialidadeDAO {
     private final EntityManagerFactory emf;
     private final EntityManager em;
 
-    public EspecialidadeDAO(EntityManager em) {
-        this.em = em;
+    public EspecialidadeDAO() {
         emf = Persistence.createEntityManagerFactory("testes");
+        this.em = emf.createEntityManager();
     }
+
 
     public Especialidade save(Especialidade especialidade) {
         EntityManager em = emf.createEntityManager();
