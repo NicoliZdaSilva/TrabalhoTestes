@@ -1,3 +1,4 @@
+//Thaiane
 package model;
 
 import dao.EspecialidadeDAO;
@@ -74,25 +75,23 @@ public class Veterinario extends Pessoa {
         this.dataAdmissao = dataAdmissao;
     }
 
-    public void setEspecialidades(Set<Especialidade> especialidades, EspecialidadeDAO especialidadeDAO) {
+    public void setEspecialidades(Set<Especialidade> novasEspecialidades, Set<Especialidade> nomesExistentes) {
         if (this.especialidades == null) {
             this.especialidades = new HashSet<>();
         }
 
-        Set<String> nomesExistentes = especialidadeDAO.findAllNames();
-
         Set<Especialidade> especialidadesAtualizadas = new HashSet<>();
-        for (Especialidade especialidade : especialidades) {
-            if (nomesExistentes.contains(especialidade.getNome())) {
-                Especialidade existente = especialidadeDAO.findByName(especialidade.getNome());
-                especialidadesAtualizadas.add(existente);
+
+        for (Especialidade novaEspecialidade : novasEspecialidades) {
+            if (nomesExistentes.contains(novaEspecialidade)) {
+                especialidadesAtualizadas.add(novaEspecialidade);
             } else {
-                especialidadesAtualizadas.add(especialidade);
+                especialidadesAtualizadas.add(novaEspecialidade);
             }
         }
-
         this.especialidades = especialidadesAtualizadas;
     }
+
 
 
     @Override
